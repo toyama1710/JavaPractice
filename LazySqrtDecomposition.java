@@ -8,7 +8,7 @@ import java.util.Arrays;
  
 //package toyama.ei1710.DataStructures;
 /**
- * モノイドを乗せられる平方分割の抽象クラス.<br>
+ * モノイドを乗せられる遅延伝播平方分割の抽象クラス.<br>
  * operatorメソッドをオーバライドすることで二項演算を定義する<br>
  * データの区間更新、区間に対する質問クエリをO(sqrt(N))で行う
  *
