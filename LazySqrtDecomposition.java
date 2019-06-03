@@ -1,11 +1,15 @@
 /**
  * @author ei1710
- * @version 1.00
+ * @version 1.01
  */
 
 import java.util.ArrayList;
 import java.util.Arrays;
- 
+
+/**
+ * @see <a href="http://judge.u-aizu.ac.jp/onlinejudge/review.jsp?rid=3621400#1"> 検証 </a>
+ */
+
 //package toyama.ei1710.DataStructures;
 /**
  * モノイドを乗せられる遅延伝播平方分割の抽象クラス.<br>
@@ -95,7 +99,7 @@ public abstract class LazySqrtDecomposition<T> {
     }
  
      
-    /** [l, r)区間をdatで更新するよ O(sqrt(N)) */
+    /** [l, r)区間をdatで更新する O(sqrt(N)) */
     public void update(int l, int r, T dat) {
         int s = l / sqrtN;
         int t = (r + sqrtN - 1) / sqrtN;
@@ -120,6 +124,7 @@ public abstract class LazySqrtDecomposition<T> {
                 for (int j = Math.max(bucket_l, l); j < Math.min(bucket_r, r); j++) {
                     raw_data.set(j, g(raw_data.get(j), dat, 1));
                 }
+                eval(i);
             }
         }
     }
@@ -136,7 +141,7 @@ public abstract class LazySqrtDecomposition<T> {
             bucket_r = (i + 1) * sqrtN;
             if (l <= bucket_l && bucket_r <= r) {
                 if (lazy_flag[i]) {
-                    x = f(x, g(bucket.get(i), lazy.get(i), 1));
+                    x = f(x, g(bucket.get(i), lazy.get(i), sqrtN));
                 }
                 else {
                     x = f(x, bucket.get(i));
