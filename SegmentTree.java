@@ -4,13 +4,13 @@
  */
 
 /**
- * ãƒ¢ãƒã‚¤ãƒ‰ã‚’ä¹—ã›ã‚‰ã‚Œã‚‹ã‚»ã‚°ãƒ¡ãƒ³ãƒˆãƒ„ãƒªãƒ¼ã®æŠ½è±¡ã‚¯ãƒ©ã‚¹<br>
- * operator ãƒ¡ã‚½ãƒƒãƒ‰ã‚’ã‚ªãƒ¼ãƒãƒ©ã‚¤ãƒ‰ã™ã‚‹ã“ã¨ã§äºŒé …æ¼”ç®—ã‚’å®šç¾©ã™ã‚‹<br>
- * ãƒ‡ãƒ¼ã‚¿ã®1ç‚¹æ›´æ–°ã¨åŒºé–“ã«å¯¾ã™ã‚‹è³ªå•ã‚¯ã‚¨ãƒªã‚’O(log(N))ã§è¡Œã†
+ * ƒ‚ƒmƒCƒh‚ğæ‚¹‚ç‚ê‚éƒZƒOƒƒ“ƒgƒcƒŠ[‚Ì’ŠÛƒNƒ‰ƒX<br>
+ * operator ƒƒ\ƒbƒh‚ğƒI[ƒoƒ‰ƒCƒh‚·‚é‚±‚Æ‚Å“ñ€‰‰Z‚ğ’è‹`‚·‚é<br>
+ * ƒf[ƒ^‚Ì1“_XV‚Æ‹æŠÔ‚É‘Î‚·‚é¿–âƒNƒGƒŠ‚ğO(log(N))‚Ås‚¤
  */
 abstract class SegmentTree<T> {
 
-    /** å˜ä½å…ƒ */
+    /** ’PˆÊŒ³ */
     protected T e;
 
     protected int n;
@@ -20,9 +20,9 @@ abstract class SegmentTree<T> {
     abstract protected T operator(T x, T y);
 
     /**
-     * è¦ç´ eã§åŸ‹ã‚ã‚‰ã‚ŒãŸè¦ç´ æ•°nmembå€‹ã®ã‚»ã‚°æœ¨ã‚’ç”Ÿæˆ
-     * @param nmemb è¦ç´ æ•°
-     * @param e åˆæœŸè¦ç´ (å˜ä½å…ƒã§ã‚ã‚‹ã“ã¨)
+     * —v‘fe‚Å–„‚ß‚ç‚ê‚½—v‘f”nmembŒÂ‚ÌƒZƒO–Ø‚ğ¶¬
+     * @param nmemb —v‘f”
+     * @param e ‰Šú—v‘f(’PˆÊŒ³‚Å‚ ‚é‚±‚Æ)
      */
     public SegmentTree(int nmemb, T e) {
         this.e = e;
@@ -39,10 +39,10 @@ abstract class SegmentTree<T> {
     }
 
     /**
-     * ãƒ‡ãƒ¼ã‚¿ã‚’æ›´æ–°ã™ã‚‹.<br>
+     * ƒf[ƒ^‚ğXV‚·‚é.<br>
      * O(log(N))
-     * @param k ãƒ‡ãƒ¼ã‚¿ã®ä½ç½®
-     * @param dat æ›´æ–°ãƒ‡ãƒ¼ã‚¿
+     * @param k ƒf[ƒ^‚ÌˆÊ’u
+     * @param dat XVƒf[ƒ^
      */
     public void update(int k, T dat) {
         k += n - 1;
@@ -56,36 +56,37 @@ abstract class SegmentTree<T> {
     }
     
     /**
-     * [l, r)åŒºé–“ã®äºŒé …æ¼”ç®—ã®çµæœã‚’è¿”ã™.<br>
+     * [l, r)‹æŠÔ‚Ì“ñ€‰‰Z‚ÌŒ‹‰Ê‚ğ•Ô‚·.<br>
      * O(log(N))
-     * @param l åŒºé–“ã®å·¦
-     * @param r åŒºé–“ã®å³
-     * @return æ¼”ç®—çµæœ
+     * @param l ‹æŠÔ‚Ì¶
+     * @param r ‹æŠÔ‚Ì‰E
+     * @return ‰‰ZŒ‹‰Ê
      */
     public T query(int l, int r) {
         l += n - 1;
         r += n - 1;
 
-        T d = e;
+		T vl = e;
+		T vr = e;
         while (l < r) {
             if (l % 2 == 0) {
-                d = operator(d, tree.get(l));
+                vl = operator(vl, tree.get(l));
                 l++;
             }
             if (r % 2 == 0) {
                 r--;
-                d = operator(d, tree.get(r));
+                vr = operator(tree.get(r), vr);
             }
 
             l = (l - 1) / 2;
             r = (r - 1) / 2;
         }
 
-        return d;
+        return f(vl, vr);
     }
 
     /**
-     * ãƒ‡ãƒãƒƒã‚°æƒ…å ±ã®å‡ºåŠ›
+     * ƒfƒoƒbƒOî•ñ‚Ìo—Í
      */
     public void debugPrint() {
         int cnt = 1;
